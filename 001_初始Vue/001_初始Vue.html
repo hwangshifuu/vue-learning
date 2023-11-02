@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>初始VUE</title>
+    <!--引入vue-->
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+<!--准备容器-->
+<div id="root">
+    <h1>{{msg}}</h1>
+</div>
+</body>
+<!--
+    初始Vue：
+        （1）想让Vue工作就必须要有Vue实例，且必须传入一个配置对象；
+        （2）root容器里面的代码依然符合html规范，只不混入了一些Vue的语法；
+        （3）root容器里面的代码被称之为模板
+        （4）root容器和Vue实例一一对应
+        （5）真实开发中只有一个Vue实例，并且配合着一些组件使用
+        （6）{{xxx}}}中的xxx要写js表达式，且xxx可以自动读取到data中的所有属性
+        （7）一旦data中的数据发生改变，那么模板中用到的{{xxx}}也会随之改变
+-->
+<script type="text/javascript">
+    Vue.config.productionTip = false; // 阻止启动生产消息，常用作指令。
+    new Vue({
+        // el: document.getElementById('root'), （2）这种写法也可，相当于是主动找到vue实例的容器。
+        el: '#root', // （1）el用于指定当前vue实例为哪个容器服务，值通常为css选择器字符串。
+        data: {
+            msg: 'Hello Vue' // （3）data用于存储数据，数据供el所指定的容器使用。
+        }
+    })
+</script>
+
+</html>

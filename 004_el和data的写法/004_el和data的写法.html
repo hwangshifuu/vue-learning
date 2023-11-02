@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<!--
+data与el的2种写法
+       1.el有2种写法
+                       (1).new Vue时候配置el属性。
+                       (2).先创建Vue实例，随后再通过vm.$mount('#root')指定el的值。
+       2.data有2种写法
+                       (1).对象式
+                       (2).函数式
+                       如何选择：目前哪种写法都可以，以后学习到组件时，data必须使用函数式，否则会报错。
+       3.一个重要的原则：
+                       由Vue管理的函数(例如data)，一定不要写箭头函数，一旦写了箭头函数，this就不再是Vue实例了。
+ -->
+<body>
+<div id="root">
+    <h1>你好，{{name}}</h1>
+</div>
+</body>
+<script>
+    Vue.config.productionTip = false;  // 阻止启动生产消息，常用作指令。
+    // el有2种写法：
+    // const v = new Vue({
+    //     el: '#root',
+    //     data: {
+    //         name: 'hangzhou'
+    //     }
+    // });
+    // console.log(v);
+    // v.$mount('#root'); // 第二种写法
+    // data有2种写法：
+    new Vue({
+        el: '#root',
+        // 第一种写法：对象式
+        // data: {
+        //     name: 'hangzhou'
+        // },
+        //第二种写法: 函数式(返回对象中包含你想渲染的模版数据)
+        //学习组件的时候要是用函数式 这个函数是Vue来调用的
+        // data: () => {
+        //    console.log(`@@@@`, this); //此时this是window，因为箭头函数没有自己的this，它向外查找找到的window
+        //    return ({
+        //         name: 'hangzhou'
+        //     })
+        // }
+        //尽量不要写成剪头函数，因为会丢失this
+        data() { // 还可以是：data: function ()
+            console.log('@@@', this); //此时this是Vue
+            return {
+                name: 'hangzhou'
+            }
+        }
+    });
+</script>
+</html>
