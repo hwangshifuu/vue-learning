@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>事件修饰符</title>
+    <!--引入vue-->
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<!--
+Vue中的事件修饰符：
+        1.prevent：阻止默认事件（常用）；
+        2.stop：阻止事件冒泡（常用）；
+        3.once：事件只触发一次（常用）；
+        4.capture：使用事件的捕获模式；
+        5.self：只有event.target是当前操作的元素时才触发事件；
+        6.passive：事件的默认行为立即执行，无需等待事件回调执行完毕；
+-->
+<body>
+<div id='root'>
+    <h1> 欢迎来到{{name}}求学！</h1>
+    <!--    <a href="https://www.baidu.com" @click='showInfo'>点击获取提示信息！</a>-->
+    <!--1、阻止默认事件（常用）-->
+    <a href="https://www.baidu.com" @click.prevent='showInfo'>点击获取提示信息1</a>
+
+    <!--2、阻止事件冒泡（常用）-->
+    <div class="demo1" @click='showInfo'>
+        <button @click.stop='showInfo'>点我提示信息2</button>
+        <!--修饰符也可以连用，例如下面事例是即阻止冒泡同时也阻止默认行为-->
+        <!--<a href="https://www.google.com.tw" @click.prevent.stop="showInfo">点我提示信息2</a>-->
+    </div>
+
+    <!--3、事件只触发一次（常用）-->
+    <button @click.once='showInfo'>点我提示信息3</button>
+
+    <!--4、使用事件的捕获模式-->
+    <div class="box1" @click.capture="showMsg(1)">
+        div1
+        <div class="box2" @click="showMsg(2)">
+            div2
+        </div>
+    </div>
+
+    <!--5、只有event.target是当前操作的元素时才触发事件-->
+    <div class="demo1" @click.self='showInfo'>
+        <button @click='showInfo'>点我提示信息3</button>
+    </div>
+
+    <!--@scroll：滚动事件通过鼠标的滚轮或者键盘中的上下键 触发，当到底之后就不会再触发    -->
+    <!--@wheel：滚轮事件通过鼠标的滚轮触发，当到底之后，继续滚动依然会触发    -->
+    <!--事件的默认行为立即执行，无需等待事件回调执行完毕-->
+    <!--  @wheel 当滚轮滚动时触发的时候，会先执行 demo中逻辑，然后再执行 默认行为 也就是滚轮乡下滚动 -->
+    <!--  @wheel.passive 当滚轮滚动时触发的时候，会立即执行 滚动效果，同时执行demo中的逻辑 -->
+    <ul @wheel.passive='demo' class="list">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+    </ul>
+
+
+</div>
+</body>
+<script>
+    Vue.config.productionTip = false; // 阻止启动生产消息，常用作指令。
+    new Vue({
+        el: '#root',
+        data: {
+            name: '北京大学'
+        },
+        methods: {
+            showInfo(e) {
+                // e.preventDefault(); 阻止a标签默认行为
+                // e.stopPropagation() //阻止事件冒泡
+                console.log(e.target)
+                alert('你好！')
+            },
+            showMsg(msg) {
+                console.log(msg)
+            },
+            demo() {
+                // 函数写一个 循环
+                for (let i = 0; i < 1000; i++) {
+                    console.log('#####')
+                }
+                console.log('@@@')
+            }
+        }
+    })
+</script>
+<style>
+    * {
+        margin: 20px;
+    }
+
+    .demo1 {
+        height: 100px;
+        background: deepskyblue;
+    }
+
+    .box1 {
+        padding: 5px;
+        background: deepskyblue;
+    }
+
+    .box2 {
+        padding: 5px;
+        background: orange;
+    }
+
+    .list {
+        width: 200px;
+        height: 200px;
+        background: salmon;
+        overflow: auto;
+    }
+
+    .list li {
+        height: 100px;
+    }
+</style>
+</html>
