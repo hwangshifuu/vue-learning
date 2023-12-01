@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>姓名案例_methods语法实现</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+<div id="root">
+    姓：<label><input type="text" v-model="firstName"></label><br/><br/>
+    名：<label><input type="text" v-model="lastName"></label><br/><br/>
+    <!--methods方法调用之后进行插值-->
+    <!--data中的数据发生变化的话，要重新解析和react类似，state一变化页面重新render-->
+    全名：<span>{{fullName()}}</span>
+</div>
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip = false; // 阻止启动生产消息，常用作指令。
+    new Vue({
+        el: '#root',
+        data: {
+            firstName: '张',
+            lastName: '三'
+        },
+        methods: {
+            fullName() {
+                return this.firstName + '-' + this.lastName
+            }
+        }
+    })
+</script>
+</html>
